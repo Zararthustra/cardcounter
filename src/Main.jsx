@@ -1,27 +1,30 @@
 import { useEffect, useRef, useState } from "react";
 import * as ml5 from "ml5";
 import useInterval from "@use-it/interval";
+import { saveLocalStorage, getLocalStorage } from "./utils/localStorage";
 
-export const Main = () => {
+export const Main = ({ team }) => {
   //_________________________________________________________________________________________________ Vars
 
-  const refreshEverySec = 0.5;
+  const refreshEverySec = 0.5; //1 = 1 second
+  const confidenceLevel = 0.7; //1 = 100%
+
   const videoRef = useRef();
   const [classifier, setClassifier] = useState(null);
   const [result, setResult] = useState(0);
   const [start, setStart] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [trump, setTrump] = useState(null);
+  const [trump, setTrump] = useState(null); //trump = atout
   const [contrat, setContrat] = useState(null);
   const [rebelotte, setRebelotte] = useState(false);
   const [lastPli, setLastPli] = useState(false);
-  const [cardsArray, setCardsArray] = useState([]);
+  const [cardsArray, setCardsArray] = useState([]); //array of accepted cards
 
   //_________________________________________________________________________________________________ UseEffect
 
   // On load
   useEffect(() => {
-    console.log("render");
+    console.log("render <Main />");
 
     // Launch classifier on video stream
     setClassifier(
@@ -63,7 +66,8 @@ export const Main = () => {
 
   const handlePrediction = (newCard) => {
     if (cardsArray.includes(newCard.label)) return;
-    newCard.confidence > 0.7 && setCardsArray([...cardsArray, newCard.label]);
+    newCard.confidence > confidenceLevel &&
+      setCardsArray([...cardsArray, newCard.label]);
   };
 
   const handleCounter = (cardsArray) => {
@@ -210,4 +214,4 @@ export const Main = () => {
       </div>
     </div>
   );
-}
+};

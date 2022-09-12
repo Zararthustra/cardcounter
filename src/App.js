@@ -5,24 +5,24 @@ import { Main } from "./Main";
 import { useEffect, useState } from "react";
 
 export const App = () => {
-  const [teamReady, setTeamReady] = useState(false);
+  const [team, setTeam] = useState(false);
 
   useEffect(() => {
-    console.log('render app');
-  }, [teamReady])
+    console.log('render <App />');
+  }, [team])
 
-  if (!teamReady)
+  if (!team)
     return (
       <>
         <Header />
-        <Landing setTeamReady={setTeamReady} />
+        <Landing setTeam={setTeam} />
       </>
     );
 
   return (
     <>
       <Header />
-      <Main />
+      <Main team={team}/>
     </>
   );
 }
