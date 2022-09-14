@@ -131,7 +131,7 @@ export const Main = ({ team }) => {
   };
 
   const saveManche = () => {
-    console.log(trump);
+    console.log(contrat);
     return;
   };
 
@@ -172,6 +172,13 @@ export const Main = ({ team }) => {
     }
   };
 
+  const selectContrat = (e) => {
+    const value = e.target.value;
+    // Cast value if INT
+    if (value.toUpperCase() != value.toLowerCase()) return setContrat(value);
+    return setContrat(parseInt(value));
+  };
+
   //_________________________________________________________________________________________________ Render
 
   return (
@@ -179,11 +186,7 @@ export const Main = ({ team }) => {
       <div className="mainContainer">
         <div className="videoContainer">
           <h2>Score : {result}</h2>
-          <video
-            ref={videoRef}
-            width="300"
-            // height="300"
-          />
+          <video ref={videoRef} width="300" />
           <button onClick={() => setStart(!start)}>
             {start ? "Arrêter" : "Lancer le compteur"}
           </button>
@@ -191,7 +194,9 @@ export const Main = ({ team }) => {
 
         <div className="optionsContainer">
           <h2>Paramètres</h2>
-          <p>Calcul des points de :</p>
+          <p>
+            <i>Calcul des points de :</i>
+          </p>
           <div className="chooseButton">
             <button
               ref={team1ButtonRef}
@@ -250,20 +255,40 @@ export const Main = ({ team }) => {
               </svg>
             </button>
           </div>
-          <h4>Contrat</h4>
-          <div className="chooseButton">
-            <button onClick={() => setContrat(80)}>80</button>
-            <button onClick={() => setContrat(90)}>90</button>
-            <button onClick={() => setContrat(100)}>100</button>
-            <button onClick={() => setContrat(110)}>110</button>
-            <button onClick={() => setContrat(120)}>120</button>
-            <button onClick={() => setContrat(130)}>130</button>
-            <button onClick={() => setContrat(140)}>140</button>
-            <button onClick={() => setContrat(150)}>150</button>
-            <button onClick={() => setContrat("capot")}>Capot</button>
+          <div className="selectDiv">
+            <p>Contrat</p>
+            <select onChange={selectContrat}>
+              <option defaultValue value="80" onClick={() => setContrat(80)}>
+                80
+              </option>
+              <option value="90" onClick={() => setContrat(90)}>
+                90
+              </option>
+              <option value="100" onClick={() => setContrat(100)}>
+                100
+              </option>
+              <option value="110" onClick={() => setContrat(110)}>
+                110
+              </option>
+              <option value="120" onClick={() => setContrat(120)}>
+                120
+              </option>
+              <option value="130" onClick={() => setContrat(130)}>
+                130
+              </option>
+              <option value="140" onClick={() => setContrat(140)}>
+                140
+              </option>
+              <option value="150" onClick={() => setContrat(150)}>
+                150
+              </option>
+              <option value="capot" onClick={() => setContrat("capot")}>
+                Capot
+              </option>
+            </select>
           </div>
           <div className="toggleDiv">
-            <h4>Belotte-Rebelotte</h4>
+            <p>Belotte-Rebelotte</p>
             <label className="switch">
               <input
                 type="checkbox"
@@ -274,7 +299,7 @@ export const Main = ({ team }) => {
             </label>
           </div>
           <div className="toggleDiv">
-            <h4>Dernier pli</h4>
+            <p>Dernier pli</p>
             <label className="switch">
               <input
                 type="checkbox"
@@ -285,7 +310,7 @@ export const Main = ({ team }) => {
             </label>
           </div>
           <div className="toggleDiv">
-            <h4>Contrée</h4>
+            <p>Contrée</p>
             <label className="switch">
               <input
                 type="checkbox"
@@ -297,7 +322,7 @@ export const Main = ({ team }) => {
           </div>
         </div>
         <button className="saveManche" onClick={saveManche}>
-          Enregistrer
+          Enregistrer la manche
         </button>
       </div>
     </main>

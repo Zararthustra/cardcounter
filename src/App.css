@@ -7,3 +7,7 @@
   --secondary: #3A3A3A;
   --grey: #999999;
 }
+
+button:hover {
+  opacity: 80%;
+}
