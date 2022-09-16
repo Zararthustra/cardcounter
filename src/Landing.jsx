@@ -11,6 +11,7 @@ export const Landing = ({ setTeam }) => {
   //___________________________________________________ Functions
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     const teamObject = {
       team1: {
         player1,

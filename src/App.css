@@ -11,3 +11,26 @@
 button:hover {
   opacity: 80%;
 }
+
+/*
+ * Scrollbar
+ */
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #fff7f7;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #ea5454;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #ff6e6e;
+}

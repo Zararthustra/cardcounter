@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import "./App.css";
 import "./Main.css";
+import "./Scores.css";
 import "./Landing.css";
 import { App } from "./App";
 

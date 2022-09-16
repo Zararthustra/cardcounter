@@ -19,6 +19,7 @@
   align-items: center;
   gap: 3rem;
   margin-top: 2rem;
+  width: 100%;
 }
 
 /*
@@ -32,11 +33,16 @@
   /* min-height: 30rem; */
   background-color: var(--primary);
   border-radius: 10px;
+  width: 90%;
 }
 
-.videoContainer h2 {
+.videoContainer h3 {
   margin: .5rem 0;
   color: white;
+}
+
+.videoContainer video {
+  width: 100%;
 }
 
 .videoContainer button {
@@ -52,7 +58,7 @@
 }
 
 /*
- * Options
+ * Parameters
 */
 
 .optionsContainer {
@@ -60,10 +66,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 85%;
+  width: 90%;
   gap: .5rem;
 }
-.optionsContainer h4{
+
+.mainContainer h2 {
+  font-size: 2.5rem;
+}
+
+.optionsContainer h4 {
   align-self: flex-start;
   margin: 1rem 0 0;
   color: var(--secondary);
@@ -78,6 +89,7 @@
   overflow: hidden;
   flex-wrap: wrap;
 }
+
 .chooseButton button {
   padding: 0;
   flex: 1;
@@ -91,6 +103,7 @@
   font-size: 1.2rem;
   background-color: var(--primary);
 }
+
 .chooseButton button:last-child {
   border-right: none
 }
@@ -102,6 +115,7 @@ select {
   font-size: 1rem;
   outline: none;
   cursor: pointer;
+  padding: .3rem 0 .1rem .2rem;
 }
 
 .toggleDiv,
@@ -113,7 +127,7 @@ select {
   font-weight: 600;
 }
 
-.mainContainer .saveManche {
+.mainContainer .saveRound {
   margin: 1rem 0 4rem;
   background-color: var(--primary);
   color: white;

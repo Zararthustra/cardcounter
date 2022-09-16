@@ -1,0 +1,35 @@
+/* .mainContainer {
+  border: 1px solid black;
+} */
+
+.tableContainer {
+  overflow-x: scroll !important;
+  width: 100%;
+  border: 1px solid black;
+}
+
+/* row */
+.tableContainer table tbody tr {
+  cursor: pointer;
+}
+
+.tableContainer table tbody tr:nth-child(odd) {
+  background-color: #fff4f4;
+}
+
+.tableContainer table tbody tr:hover {
+  background-color: var(--primary);
+  color: white;
+}
+
+/* head */
+.tableContainer table th {
+  padding: 1rem;
+  border-bottom: 1px solid black;
+}
+
+/* cell */
+.tableContainer table td {
+  width: 100%;
+  padding: 1rem;
+}
