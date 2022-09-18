@@ -1,9 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import * as ml5 from "ml5";
 import useInterval from "@use-it/interval";
+import { saveLocalStorage } from "./utils/localStorage";
 // import { saveLocalStorage } from "./utils/localStorage";
 
-export const Counter = ({ round, rounds, setRounds, setComputed }) => {
+export const Counter = ({
+  round,
+  rounds,
+  setRounds,
+  setComputed,
+  setParametered,
+}) => {
   //_________________________________________________________________________________________________ Vars
 
   // useRefs
@@ -15,7 +22,7 @@ export const Counter = ({ round, rounds, setRounds, setComputed }) => {
   const confidenceLevel = 0.7; //1 = 100%
 
   const [classifier, setClassifier] = useState(null);
-  const [result, setResult] = useState(0);
+  const [result, setResult] = useState({ "Equipe 1": 0, "Equipe 2": 0 });
   const [start, setStart] = useState(false);
   const [loading, setLoading] = useState(false);
   const [cardsArray, setCardsArray] = useState([]); //array of accepted cards
@@ -46,7 +53,7 @@ export const Counter = ({ round, rounds, setRounds, setComputed }) => {
       })
     );
     return () => (mounted = false);
-  }, [result, start]);
+  }, [start]);
 
   useInterval(() => {
     if (classifier && start) {
@@ -54,7 +61,7 @@ export const Counter = ({ round, rounds, setRounds, setComputed }) => {
       classifier.classify(videoRef.current, (error, predictions) => {
         if (error) return console.error(error);
 
-        console.log(predictions);
+        console.log("predictions : ", predictions);
         // Append the highest prediction to cardsArray
         handlePrediction(predictions[0]);
         console.log("cardsArray : ", cardsArray);
@@ -93,7 +100,7 @@ export const Counter = ({ round, rounds, setRounds, setComputed }) => {
   };
 
   const handleCounter = (cardsArray) => {
-    // const totalPoints = round.rebelote ? 180 : 160 ???
+    // const totalPoints = round.rebelote ? 180 : 160
     let finalPoints =
       cardsArray.reduce(
         (previousValue, currentValue) =>
@@ -110,7 +117,13 @@ export const Counter = ({ round, rounds, setRounds, setComputed }) => {
     } else {
       if (finalPoints > 160 - round.contrat) finalPoints = 160;
     }
-    return finalPoints;
+
+    const otherTeamFinalPoints = 160 - finalPoints >= 0 ? 160 - finalPoints : 0;
+
+    return {
+      "Equipe 1": teamCalc === "Equipe 1" ? finalPoints : otherTeamFinalPoints,
+      "Equipe 2": teamCalc === "Equipe 2" ? finalPoints : otherTeamFinalPoints,
+    };
   };
 
   const scoreMapping = (card) => {
@@ -155,9 +168,13 @@ export const Counter = ({ round, rounds, setRounds, setComputed }) => {
     const updatedRound = {
       ...round,
       result,
+      teamCalc,
     };
     setRounds([...rounds, updatedRound]);
-    return setComputed(true);
+    saveLocalStorage("rounds", JSON.stringify([...rounds, updatedRound]));
+    setParametered(false);
+    setComputed(true)
+    return
   };
 
   //_________________________________________________________________________________________________ Render
@@ -179,8 +196,9 @@ export const Counter = ({ round, rounds, setRounds, setComputed }) => {
           Equipe 2
         </button>
       </div>
+      <div>{loading ? "Chargement..." : ""}</div>
       <div className="videoContainer">
-        <h3>Score : {result}</h3>
+        <h3>Score : {result[teamCalc]}</h3>
         <video ref={videoRef} />
         <button onClick={startCounter}>
           {start ? "Arrêter" : "Lancer le compteur"}

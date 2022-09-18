@@ -2,34 +2,71 @@
   border: 1px solid black;
 } */
 
+.teamsPoints {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.teamPoints {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+}
+.teamPoints h3:not(:first-child) {
+  color: var(--primary);
+  font-size: 2rem;
+  margin: 0;
+}
+
 .tableContainer {
   overflow-x: scroll !important;
   width: 100%;
-  border: 1px solid black;
+}
+
+.tableContainer table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  white-space: nowrap;
+  text-align: center;
 }
 
 /* row */
 .tableContainer table tbody tr {
   cursor: pointer;
 }
+.tableContainer table tbody tr:first-child {
+  border-bottom: 1px solid black;
+  font-weight: 600;
+  font-size: 1.4rem;
+}
 
-.tableContainer table tbody tr:nth-child(odd) {
+.tableContainer table tbody td:nth-child(odd) {
   background-color: #fff4f4;
 }
 
-.tableContainer table tbody tr:hover {
+.tableContainer table tbody td:hover {
   background-color: var(--primary);
   color: white;
+}
+
+.tableContainer table tbody td:hover svg {
+  fill: white;
 }
 
 /* head */
 .tableContainer table th {
   padding: 1rem;
-  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  font-size: 1.2rem;
+  text-align: start;
+  /* width: 6rem; */
 }
 
 /* cell */
 .tableContainer table td {
-  width: 100%;
   padding: 1rem;
 }

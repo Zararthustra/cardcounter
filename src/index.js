@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+import "./Header.css";
 import "./App.css";
 import "./Main.css";
 import "./Scores.css";

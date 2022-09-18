@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { saveLocalStorage } from "./utils/localStorage";
 
-export const Parameters = ({ setRound }) => {
+export const Parameters = ({ setRound, setParametered }) => {
   //_________________________________________________________________________________________________ Vars
 
   // useRefs
@@ -31,7 +31,7 @@ export const Parameters = ({ setRound }) => {
   // On load
   useEffect(() => {
     let mounted = true;
-    console.log("Render <Parameters />");
+    if (mounted) console.log("Render <Parameters />");
     return () => (mounted = false);
   }, []);
 
@@ -117,14 +117,16 @@ export const Parameters = ({ setRound }) => {
       trump,
       contrat,
       rebelote,
-      ...(rebelote && { rebeloteTeam }),
+      rebeloteTeam: rebeloteTeam || "/",
       lastPliTeam,
       contree,
     };
+    if (rebelote && rebeloteTeam === null) return // error toast here
     if (Object.values(round).includes(null)) return; // error toast here
     console.log(round);
     saveLocalStorage("round", JSON.stringify(round));
-    return setRound(round);
+    setRound(round);
+    return setParametered(true)
   };
 
   //_________________________________________________________________________________________________ Render

@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import { Parameters } from "./Parameters";
 import { Counter } from "./Counter";
-import { getLocalStorage } from "./utils/localStorage";
 
-export const Main = ({ rounds, setRounds, setShowScores, setComputed }) => {
+export const Main = ({
+  rounds,
+  setRounds,
+  setShowScores,
+  setComputed,
+  setParametered,
+}) => {
   //_________________________________________________________________________________________________ Vars
 
   // const [loading, setLoading] = useState(false);
@@ -14,8 +19,7 @@ export const Main = ({ rounds, setRounds, setShowScores, setComputed }) => {
   // On load
   useEffect(() => {
     let mounted = true;
-    console.log("render <Main />");
-
+    if (mounted) console.log("render <Main />");
     return () => (mounted = false);
   }, []);
 
@@ -31,13 +35,18 @@ export const Main = ({ rounds, setRounds, setShowScores, setComputed }) => {
           rounds={rounds}
           setRounds={setRounds}
           setComputed={setComputed}
+          setParametered={setParametered}
         />
       </main>
     );
 
   return (
     <main className="mainPage">
-      <Parameters round={round} setRound={setRound} />
+      <Parameters
+        round={round}
+        setRound={setRound}
+        setParametered={setParametered}
+      />
     </main>
   );
 };

@@ -11,6 +11,7 @@ export const App = () => {
   const [rounds, setRounds] = useState([]);
   const [showScores, setShowScores] = useState(false);
   const [computed, setComputed] = useState(false);
+  const [parametered, setParametered] = useState(false);
 
   useEffect(() => {
     console.log("render <App />");
@@ -19,7 +20,6 @@ export const App = () => {
   if (team === null)
     return (
       <>
-        <Header />
         <Landing setTeam={setTeam} />
       </>
     );
@@ -27,19 +27,34 @@ export const App = () => {
   if (showScores || computed)
     return (
       <>
-        <Header />
-        <Scores rounds={rounds} setComputed={setComputed} setShowScores={setShowScores} />
+        <Header
+          parametered={parametered}
+          computed={computed}
+          showScores={showScores}
+          setShowScores={setShowScores}
+        />
+        <Scores
+          rounds={rounds}
+          setComputed={setComputed}
+          setShowScores={setShowScores}
+        />
       </>
     );
 
   return (
     <>
-      <Header />
+      <Header
+        parametered={parametered}
+        computed={computed}
+        showScores={showScores}
+        setShowScores={setShowScores}
+      />
       <Main
         rounds={rounds}
         setRounds={setRounds}
         setShowScores={setShowScores}
         setComputed={setComputed}
+        setParametered={setParametered}
       />
     </>
   );

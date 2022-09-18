@@ -8,6 +8,10 @@
   --grey: #999999;
 }
 
+li {
+  list-style: none;
+}
+
 button:hover {
   opacity: 80%;
 }
