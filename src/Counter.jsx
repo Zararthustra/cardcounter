@@ -18,8 +18,8 @@ export const Counter = ({
   const team1CalcButtonRef = useRef();
   const team2CalcButtonRef = useRef();
 
-  const refreshEverySec = 0.5; //1 = 1 second
-  const confidenceLevel = 0.7; //1 = 100%
+  const refreshEverySec = 0.1; //1 = 1 second
+  const confidenceLevel = 0.99; //1 = 100%
 
   const [classifier, setClassifier] = useState(null);
   const [result, setResult] = useState({ "Equipe 1": 0, "Equipe 2": 0 });
@@ -100,25 +100,28 @@ export const Counter = ({
   };
 
   const handleCounter = (cardsArray) => {
-    // const totalPoints = round.rebelote ? 180 : 160
+    const totalPoints = round.rebelote ? 180 : 160
     let finalPoints =
-      cardsArray.reduce(
-        (previousValue, currentValue) =>
-          previousValue + scoreMapping(currentValue),
-        0
-      ) +
       (round.lastPliTeam === teamCalc ? 10 : 0) +
       (round.rebeloteTeam === teamCalc ? 20 : 0);
 
-    if (round.teamBet === teamCalc) {
-      if (finalPoints >= round.contrat)
-        finalPoints = Math.round(finalPoints / 10) * 10;
-      else finalPoints = 0;
-    } else {
-      if (finalPoints > 160 - round.contrat) finalPoints = 160;
-    }
+    console.log("Bonus : ", finalPoints);
 
-    const otherTeamFinalPoints = 160 - finalPoints >= 0 ? 160 - finalPoints : 0;
+    finalPoints += cardsArray.reduce(
+      (previousValue, currentValue) =>
+        previousValue + scoreMapping(currentValue),
+      0
+    );
+
+    // if (round.teamBet === teamCalc) {
+    //   if (finalPoints >= round.contrat)
+    //     finalPoints = Math.round(finalPoints / 10) * 10;
+    //   else finalPoints = 0;
+    // } else {
+    //   if (finalPoints > 160 - round.contrat) finalPoints = 160;
+    // }
+
+    const otherTeamFinalPoints = totalPoints - finalPoints >= 0 ? totalPoints - finalPoints : 0;
 
     return {
       "Equipe 1": teamCalc === "Equipe 1" ? finalPoints : otherTeamFinalPoints,
@@ -173,8 +176,8 @@ export const Counter = ({
     setRounds([...rounds, updatedRound]);
     saveLocalStorage("rounds", JSON.stringify([...rounds, updatedRound]));
     setParametered(false);
-    setComputed(true)
-    return
+    setComputed(true);
+    return;
   };
 
   //_________________________________________________________________________________________________ Render
@@ -196,6 +199,7 @@ export const Counter = ({
           Equipe 2
         </button>
       </div>
+      <div>{JSON.stringify(cardsArray)}</div>
       <div>{loading ? "Chargement..." : ""}</div>
       <div className="videoContainer">
         <h3>Score : {result[teamCalc]}</h3>
